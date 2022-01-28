@@ -3,6 +3,7 @@ pragma solidity ^0.4.17;
 contract Lottery{
     address public manager;
     address[] public players;
+    address public contestWinner;
     function Lottery()public{
         manager = msg.sender; //Getting the address of the manager
     }
@@ -19,7 +20,8 @@ contract Lottery{
         return uint(keccak256(block.difficulty,now,players));
     }
 
-    function pickWinner() public restricted{
+    // function pickWinner() public restricted{ //Enable this to allow only managers to pick winner
+        function pickWinner() public{
         //Make sure only manager can call this
         // require(msg.sender == manager);//Only person that originally created the contract(manager) will be able to create this
         var randnum = randomNumGenerator();
@@ -27,7 +29,7 @@ contract Lottery{
 
         //this.balance will give us the balance/amt of money remaining in the current contract
         winner.transfer(this.balance);
-
+        contestWinner = winner;
         //Once contract execution is complete, we reset the contract
         players = new address[](0); //Creating a new dynamic array of type address 
     }

@@ -5,7 +5,7 @@ const mnemonicInfo = require('./config.json')
 
 
 const provider = new HDWalletProvider(
-  'REPLACE_WITH_YOUR_MNEMONIC',
+  // 'REPLACE_WITH_YOUR_MNEMONIC',
   mnemonicInfo['metamaskMnemonic'],
   "https://rinkeby.infura.io/v3/7d6907ac88884292876bc0495740870d"
 );
@@ -20,6 +20,7 @@ const deploy = async () => {
     .deploy({ data: bytecode })
     .send({ gas: '1000000', from: accounts[0] });
 
+  console.log("ABI: ",interface)
   console.log('Contract deployed to', result.options.address);
   provider.engine.stop();
 };
